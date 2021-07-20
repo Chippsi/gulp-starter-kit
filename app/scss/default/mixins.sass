@@ -1,0 +1,62 @@
+//! Конвертация px в vw
+@function vw($font, $vw-viewport: 320, $vw-enable: true)
+	@if ($vw-enable)
+		$vw-context: $vw-viewport * 0.01 * 1px
+		@return $font / $vw-context * 1vw
+
+	@return $font
+
+//! Вычисление em относительно размера шрифта в px
+@function em($fontPX, $propertyPX)
+	$em: $propertyPX / $fontPX + em
+	@return $em
+
+//! Вычисление процента относительно родителя
+@function pcnt($wParentPX, $wChildPX)
+	$pc: (($wChildPX * 100) / $wParentPX) * 1%
+	@return $pc
+
+//! Ограничение диапозона размеров для относительных едениц vw
+// $responsive  - Viewport-based size
+// $min         - Minimum font size (px)
+// $max         - Maximum font size  (optional)
+// $fallback    - Fallback for viewport-
+//                                  based units (optional)
+//
+// @example scss - 5vw font size (with 50px fallback),
+//                 minumum of 35px and maximum of 150px
+// @include responsive-vw(5vw, 35px, 150px, 50px);
+//
+@mixin responsive-vw($responsive, $min, $max: false, $important: false)
+	$responsive-unitless: $responsive / ($responsive - $responsive + 1)
+	$dimension: if(unit($responsive) == "vh", "height", "width")
+	$min-breakpoint: $min / $responsive-unitless * 100
+
+	@media (max-#{$dimension}: #{$min-breakpoint})
+		@if $important
+			font-size: $min !important
+		@else
+			font-size: $min
+
+	@if $max
+		$max-breakpoint: $max / $responsive-unitless * 100
+
+		@media (min-#{$dimension}: #{$max-breakpoint})
+			@if $important
+				font-size: $max !important
+			@else
+				font-size: $max
+
+	@if $important
+		font-size: $responsive !important
+	@else
+		font-size: $responsive
+
+//! Подключение шрифта
+@mixin font($font_name, $file_name, $weight, $style)
+	@font-face
+		font-family: $font_name
+		font-display: swap
+		src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2")
+		font-weight: #{$weight}
+		font-style: #{$style}

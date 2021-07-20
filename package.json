@@ -1,0 +1,47 @@
+{
+  "browserslist": [
+    "defaults",
+    "not dead",
+    ">0.5%",
+    "not IE 11"
+  ],
+  "type": "module",
+  "name": "gulp-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abramov Anton (Chippsi)",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "@zoxon/emitty": "latest",
+    "browser-sync": "latest",
+    "browserslist": "latest",
+    "del": "latest",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-changed": "^3.2.0",
+    "gulp-concat": "latest",
+    "gulp-file-include": "latest",
+    "gulp-group-css-media-queries": "latest",
+    "gulp-if": "latest",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-plumber": "latest",
+    "gulp-pug": "latest",
+    "gulp-pugbem": "latest",
+    "gulp-rename": "latest",
+    "gulp-sass": "latest",
+    "gulp-svg-sprite": "latest",
+    "gulp-uglify-es": "latest",
+    "gulp-webp": "^4.0.0",
+    "gulp-webpcss": "latest",
+    "imagemin-pngquant": "latest",
+    "sass": "^1.35.2",
+    "webp-converter": "^2.2.3"
+  }
+}

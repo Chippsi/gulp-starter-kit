@@ -1,0 +1,16 @@
+doctype html
+html(lang="ru")
+    block vars
+    include ../includes/mixins/mixins
+    include ../includes/modules/head
+    body
+        .wrapper
+            include ../includes/modules/header
+            main.page
+                block content
+            include ../includes/modules/footer
+        //-include ../includes/modules/popup
+        //- скрипты
+        block scripts
+            script(src="js/vendors.min.js") 
+            script(src="js/main.min.js")

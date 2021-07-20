@@ -1,0 +1,69 @@
+header
+	background-color: rgb(255, 184, 136)
+
+.page
+	background-color: rgb(253, 255, 136)
+
+footer
+	background-color: rgb(136, 231, 255)
+
+//?----mixins----
+@import "default/mixins"
+
+//?----fonts----
+//&display=swap&subset=cyrillic-ext
+//@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;900&display=swap');
+@import "default/fonts"
+$fontFamily: "Roboto"
+
+//?----vars----
+$minWidth: 320px
+$maxWidth: 1920
+$maxWidthContainer: 1600
+$md1: $maxWidthContainer + 12px
+//$md15: 1390
+//$md18: 1190
+$md2: 991.98
+$md3: 767.98
+$md4: 479.98
+
+//?----includes----
+@import "default/null"
+
+@import "libs/swiper"
+
+@import "hero"
+
+//?----default styles----
+body
+	min-width: $minWidth
+	font-family: $fontFamily
+	color: #000
+	font-size: 20px
+	font-weight: 400
+	&._lock
+		overflow: hidden
+
+.wrapper
+	width: 100%
+	min-height: 100vh
+	overflow: hidden
+	display: flex
+	flex-direction: column
+
+._container
+	padding: 64px 20px
+	max-width: $maxWidthContainer + px
+	margin: 0 auto
+	@media (max-width: $md1+px)
+		//max-width: 970px;
+		max-width: 	1390px
+	@media (max-width: $md2+px)
+		max-width: 750px
+
+	@media (max-width: $md3+px)
+		max-width: none
+		padding: 40px 10px
+
+.page
+	flex: 1 1 auto

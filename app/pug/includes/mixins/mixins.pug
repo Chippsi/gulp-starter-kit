@@ -1,0 +1,53 @@
+//- include bemto/bemto.pug
+
+//- Вставка svg
+mixin svg(options={id: 'id', typeMulti: false})
+    svg(class=attributes.class)
+        use(xlink:href= options.typeMulti ? `./img/sprites/sprite-multi.svg#${options.id}` : `./img/sprites/sprite-mono.svg#${options.id}`)
+
+//- Вставка изображения webp + [png or jpg]
+mixin picture(name, type, path)
+    picture
+        source(type="image/webp" srcset= path ? `./img/${path+'/'}${name}.webp` : `./img/${name}.webp`)
+        img(src= path ? `./img/${path+'/'}${name}.${type}` : `./img/${name}.${type}` alt=`${name}` class= attributes.class)
+
+//- Слайдер swiper
+
+//- initialization custom blocks
+- let blocks = {}
+
+//- add custom block
+mixin set(key)
+    - blocks[key] = this.block
+    
+//- sldier swiper slide
+mixin slide(key, style)
+    - let sliderClass = key
+        +set(`${key}__slide`)
+            .swiper-slide(class= `${key}__slide` style= style ? `${style}` : false)
+                block
+        - blocks[`${key}__slide`]()
+
+//- slider swiper
+mixin swiper(pagination)
+    div(class= `wrp-${attributes.class}`)
+        .swiper-container(class= `${attributes.class} _swiper`)
+            .swiper-wrapper(class= attributes.class ? `${attributes.class}__wrapper` : false)
+                block
+            if (attributes.svg)
+                    div(class= attributes.class ? `${attributes.class}__btn ${attributes.class}__btn--prev` : false)
+                        if blocks.btn
+                            - blocks.btn()
+                        else 
+                            +svg(attributes.svg)
+                    div(class= attributes.class ? `${attributes.class}__btn ${attributes.class}__btn--next` : false)
+                        if blocks.btn
+                            - blocks.btn()
+                            - blocks = {}
+                        else
+                            +svg(attributes.svg)
+    if (pagination)
+        div(class= attributes.class ? `${attributes.class}__pagination` : false)
+        //- if (scrollbar)
+                div(class= attributes.class ? `${attributes.class}__scroll-bar` : false)
+                    block scrollbar
