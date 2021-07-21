@@ -9,7 +9,7 @@ mixin svg(options={id: 'id', typeMulti: false})
 mixin picture(name, type, path)
     picture
         source(type="image/webp" srcset= path ? `./img/${path+'/'}${name}.webp` : `./img/${name}.webp`)
-        img(src= path ? `./img/${path+'/'}${name}.${type}` : `./img/${name}.${type}` alt=`${name}` class= attributes.class)
+        img(src= path ? `./img/${path+'/'}${name}.${type}` : `./img/${name}.${type}` alt=`${name}` class= attributes.class width= attributes.width height= attributes.height)
 
 //- Слайдер swiper
 
