@@ -11,8 +11,3 @@ let controller = new ScrollMagic.Controller();
     })
     .addTo(controller);
 } */
-
-let newMy = {
-    chto: 'wow'
-}
-console.log(newMy?.chto?.aga);

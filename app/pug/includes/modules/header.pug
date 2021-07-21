@@ -1,3 +1,15 @@
 header.b-header._lp
     ._container._container
-        menu
+        ._iconMenu.iconMenu(role='button' tabindex='0')
+            span
+        .b-menu._menu
+            ._wrapper
+                ._body
+                    nav._nav
+                        ul._list
+                            - items = [0,1,2,3,1,1,1,1,1,1,]
+                            each item in items
+                                li._item
+                                    a._link(href='#')
+                                        = item
+                                        | Элемент

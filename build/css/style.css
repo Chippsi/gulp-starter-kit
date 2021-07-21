@@ -182,6 +182,67 @@ h4 {
   display: none !important;
 }
 
+.iconMenu {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 20px;
+  margin: 2px 0;
+}
+
+.iconMenu span,
+.iconMenu:before,
+.iconMenu:after {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#000, #000) center/100% 3px no-repeat;
+  transition: top 0.2s ease 0.2s, bottom 0.2s ease 0.2s, transform 0.2s ease;
+}
+
+.iconMenu:before,
+.iconMenu:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.iconMenu span {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.iconMenu:before {
+  top: 50%;
+}
+
+.iconMenu:after {
+  bottom: 50%;
+}
+
+.iconMenu--active:before,
+.iconMenu--active:after {
+  transform-origin: center;
+  transition: top 0.2s ease, bottom 0.2s ease, transform 0.2s ease 0.2s;
+}
+
+.iconMenu--active:before {
+  top: 0;
+  transform: translate3d(0, 0, 0) rotate(45deg);
+}
+
+.iconMenu--active:after {
+  bottom: 0;
+  transform: translate3d(0, 0, 0) rotate(-45deg);
+}
+
+.iconMenu--active span {
+  transform: translate3d(0, 0, 0) scale(0);
+}
+
 body {
   min-width: 320px;
   font-family: "Roboto";
@@ -219,6 +280,46 @@ body._lock {
 }
 
 @media (max-width: 991.98px) {
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    visibility: hidden;
+    overflow: scroll;
+    transition: background 0.6s ease, width 0s 0.6s, height 0s 0.6s, visibility 0s 0.6s;
+  }
+
+  .menu__wrapper {
+    width: 100%;
+    background-color: orange;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  .menu__body {
+    padding: 10px;
+    width: 100%;
+    background-color: #ffc788;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.6s ease;
+  }
+
+  .menu--active {
+    width: 100%;
+    min-width: 320px;
+    height: 100%;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: visible;
+    transition: background 0.6s ease;
+  }
+
+  .menu--active .menu__body {
+    transform: translate3d(0, 100%, 0);
+  }
+
   ._container {
     max-width: 750px;
   }

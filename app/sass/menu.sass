@@ -1,0 +1,93 @@
+$bpoint: $md2
+
+$iconBoxHeight: 20px
+$iconBoxWidth: 30px
+$iconElemHeight: 3px
+$overlayColor: rgba(0, 0, 0, 0.4)
+$bodyColor: #ffc788
+
+$animDuration: .6s
+$animDurationIcon: .2s //* (full time animation === $animDurationIcon * 2)
+
+.menu
+    @media (max-width:$bpoint+px)
+        position: fixed
+        top: 0
+        left: 0
+        width: 1px
+        height: 1px
+        margin: -1px
+        visibility: hidden
+        overflow: scroll
+        transition: background $animDuration ease, width 0s $animDuration, height 0s $animDuration, visibility 0s $animDuration
+
+        &__wrapper
+            width: 100%
+            background-color: orange
+            transform: translate3d(0, -100%, 0)
+
+        &__body
+            padding: 10px
+            width: 100%
+            background-color: $bodyColor
+            transform: translate3d(0,0,0)
+            transition: transform $animDuration ease
+
+.menu--active
+    @media (max-width:$bpoint+px)
+        width: 100%
+        min-width: 320px
+        height: 100%
+        margin: 0
+        background-color: $overlayColor
+        visibility: visible
+        transition: background $animDuration ease
+        .menu__body
+            transform: translate3d(0,100%,0)
+
+.iconMenu
+    position: relative
+    z-index: 100
+    display: flex
+    align-items: center
+    justify-content: center
+    width: $iconBoxWidth
+    height: $iconBoxHeight
+    margin: 2px 0
+    span,
+    &:before,
+    &:after
+        display: block
+        width: 100%
+        height: 100%
+        background: linear-gradient(#000, #000) center / 100% $iconElemHeight no-repeat
+        transition: top $animDurationIcon ease $animDurationIcon, bottom $animDurationIcon ease $animDurationIcon, transform $animDurationIcon ease
+    &:before,
+    &:after
+        content: ''
+        position: absolute
+        left: 0
+        transform: translate3d(0, 0, 0)
+
+    span
+        transform: translate3d(0,0,0) scale(1)
+
+    &:before
+        top: 50%
+
+    &:after
+        bottom: 50%
+
+.iconMenu--active
+    &:before,
+    &:after
+        transform-origin: center
+        transition: top $animDurationIcon ease, bottom $animDurationIcon ease, transform $animDurationIcon ease $animDurationIcon
+    &:before
+        top: 0
+        transform: translate3d(0,0,0) rotate(45deg)
+    &:after
+        bottom: 0
+        transform: translate3d(0,0,0) rotate(-45deg)
+    span
+        transform: translate3d(0,0,0) scale(0)

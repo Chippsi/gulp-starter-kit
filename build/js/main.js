@@ -1,7 +1,5 @@
 "use strict";
 
-var _newMy$chto;
-
 //? User Agents
 let ua = window.navigator.userAgent;
 let msie = ua.indexOf("MSIE ");
@@ -57,61 +55,62 @@ testWebP(function (support) {
   } else {
     document.querySelector('body').classList.add('_no-webp');
   }
-}); //? Преобразвывает высоту VH css за вычетом шторки навигации браузера.
+}); //?-------------------------------------------
 
-/* if (document.querySelector("body").classList.contains("_touch")) {
+function Body() {
+  this.target = document.body;
+  this.state = 'unlock';
 
-	function adaptiveVH() {
-		const portrait = window.matchMedia('(orientation: portrait)');
-		const defaultVh = window.innerHeight;
-		const defaultOrientation = portrait.matches;
-		let activeOrientation = defaultOrientation;
-		let vh = window.innerHeight;
+  this.setState = () => {
+    return this.state === 'unlock' ? this.lock() : this.unlock();
+  };
 
-		document.querySelector(".hero").style.height = vh + 'px';
+  this.lock = () => {
+    this.target.style.overflow = 'hidden';
+    this.target.style.height = '100vh';
+    return this.state = 'lock';
+  };
 
-		window.addEventListener("resize", function() {
-			if (activeOrientation !== portrait.matches) {
-				activeOrientation = portrait.matches;
-				if (activeOrientation === defaultOrientation) {
-					vh = defaultVh;
-				} else {
-					vh = window.innerHeight;
-				}
-				document.querySelector(".hero").style.height = vh + 'px'; //! Куда?
-				popupInit();
-			}
-		});
-	}
-	adaptiveVH();
-} */
-//?-----------------------------------------------------------------------
-//Menu
-
-let iconMenu = document.querySelector(".icon-menu");
-
-if (iconMenu != null) {
-  let delay = 500;
-  let menuBody = document.querySelector(".menu__body");
-  iconMenu.addEventListener("click", function (e) {
-    if (unlock) {
-      body_lock(delay);
-      iconMenu.classList.toggle("_active");
-      menuBody.classList.toggle("_active");
-      document.querySelector('.bottom-line').classList.toggle("_active");
-    }
-  });
+  this.unlock = () => {
+    this.target.style.overflow = 'auto';
+    this.target.style.height = '';
+    return this.state = 'unlock';
+  };
 }
 
-;
+const body = new Body(); //Menu
 
-function menu_close() {
-  let iconMenu = document.querySelector(".icon-menu");
-  let menuBody = document.querySelector(".menu__body");
-  iconMenu.classList.remove("_active");
-  menuBody.classList.remove("_active");
-} //=================
+function Menu(delay, closeOverlay = true) {
+  this.state = null;
+  this.delay = delay;
+  this.closeOverlay = closeOverlay;
 
+  this.setState = delay => {
+    body.setState();
+    this.icon.style.pointerEvents = 'none';
+    this.menu.style.pointerEvents = 'none';
+    this.icon.classList.toggle('iconMenu--active');
+    this.menu.classList.toggle('menu--active');
+    setTimeout(() => {
+      this.icon.style.pointerEvents = '';
+      this.menu.style.pointerEvents = '';
+    }, delay);
+    return this.state = this.state === 'closed' ? 'opened' : 'closed';
+  };
+
+  this.init = delay => {
+    this.icon = document.querySelector('.iconMenu');
+    this.menu = document.querySelector('.menu');
+    if (this.icon && this.menu) this.icon.addEventListener('click', () => this.setState(this.delay));
+    if (this.closeOverlay) this.menu.addEventListener('click', event => {
+      if (event.target === this.menu) this.setState(this.delay);
+    });
+    return this.state = 'closed';
+  };
+}
+
+const menu = new Menu(600);
+menu.init(); //=================
 
 let controller = new ScrollMagic.Controller();
 /* function initMap() {
@@ -125,8 +124,3 @@ let controller = new ScrollMagic.Controller();
     })
     .addTo(controller);
 } */
-
-let newMy = {
-  chto: 'wow'
-};
-console.log(newMy === null || newMy === void 0 ? void 0 : (_newMy$chto = newMy.chto) === null || _newMy$chto === void 0 ? void 0 : _newMy$chto.aga);

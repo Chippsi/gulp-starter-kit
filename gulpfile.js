@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';
-import sass from 'sass'
+import sassDart from 'sass'
 import prefix from 'gulp-autoprefixer';
 import uglify from 'gulp-uglify-es';
 import concat from 'gulp-concat';
@@ -19,7 +19,7 @@ import svgSprite from 'gulp-svg-sprite';
 import fs from 'fs';
 import include from 'gulp-file-include';
 
-const scss = gulpSass(sass);
+const sass = gulpSass(sassDart);
 // pug__bem--on
 import pug from 'gulp-pug';
 import pugbem from 'gulp-pugbem';
@@ -67,8 +67,8 @@ export const html = () => {
 
 //-->Стили ----------------------------------------------------------------
 export const style = () => {
-    return gulp.src('app/scss/style.sass')
-        .pipe(scss({ outputStyle: 'expanded' }))
+    return gulp.src('app/sass/style.sass')
+        .pipe(sass({ outputStyle: 'expanded' }))
         .pipe(prefix({
             grid: true,
             cascade: false,
@@ -79,7 +79,7 @@ export const style = () => {
         }))
         .pipe(media_concat())
         .pipe(gulp.dest('build/css'))
-        .pipe(scss({ outputStyle: 'compressed' }))
+        .pipe(sass({ outputStyle: 'compressed' }))
         .pipe(rename({
             suffix: '.min',
             extname: '.css'
@@ -105,7 +105,11 @@ export const mainJs = () => {
         .pipe(include())
         .pipe(concat('main.js'))
         .pipe(babel({
-            presets: ["@babel/preset-env"]
+            presets: [
+                [
+                        "@babel/preset-env"
+                ]
+            ]
         }))
         .pipe(gulp.dest('build/js'))
         .pipe(concat('main.min.js'))
@@ -211,9 +215,9 @@ export const fonts = () => {
 const cb = () => { } //! Не удалять!
 export const fontstyle = (done) => {
     if (fontsReady) {
-        let file_content = fs.readFileSync('./app/scss/default/fonts.scss');
+        let file_content = fs.readFileSync('./app/sass/default/fonts.sass');
 
-        fs.writeFile('./app/scss/default/fonts.scss', '', cb);
+        fs.writeFile('./app/sass/default/fonts.sass', '', cb);
         fs.readdir('./build/fonts/', function (err, items) {
             if (items) {
                 let c_fontname;
@@ -221,7 +225,7 @@ export const fontstyle = (done) => {
                     let fontname = items[i].split('.');
                     fontname = fontname[0];
                     if (c_fontname != fontname) {
-                        fs.appendFile('./app/scss/default/fonts.scss', '@include font("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
+                        fs.appendFile('./app/sass/default/fonts.sass', '@include font("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
                     }
                     c_fontname = fontname;
                 }
@@ -256,7 +260,7 @@ export const watch = () => {
             stats
         };
     });
-    gulp.watch('app/scss/**/*.scss', gulp.series(style));
+    gulp.watch('app/sass/**/*.sass', gulp.series(style));
     gulp.watch(['app/js/vendors.js', 'app/js/libs/**/*.js'], gulp.series(vendorsJs));
     gulp.watch(['app/js/scripts.js', 'app/js/components/**/*.js'], gulp.series(mainJs));
     gulp.watch('app/fonts/**/*.{woff,woff2}', gulp.series(fonts, fontstyle));
