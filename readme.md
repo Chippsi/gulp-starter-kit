@@ -17,7 +17,7 @@
 - Minimize build files
 - Live server with file watching
 
-**In addition, it contains commonly used libraries. You can see more details or remove unnecessary things in the ./js directory**
+**And also contains commonly used libraries. You can see more details or remove unnecessary things in the ./js directory**
 ## Instalation
 
 `npm install --global gulp-cli`
